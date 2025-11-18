@@ -608,4 +608,3 @@ graph TB
 
 ---
 
-*Esta documentación presenta la arquitectura completa de sistemas de agentes inteligentes, organizada de manera clara y secuencial: primero el sistema de voz automatizado completo, seguido del sistema multi-agente FAQ-RAG con su router inteligente, y finalmente la observabilidad unificada de todo el ecosistema.*
