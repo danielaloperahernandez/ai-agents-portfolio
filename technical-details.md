@@ -35,7 +35,6 @@ graph TB
     
     subgraph "Observability"
         M[Langfuse Tracing]
-        N[DataDog Monitoring]
     end
     
     A --> C
@@ -54,7 +53,6 @@ graph TB
     F --> L
     
     G --> M
-    F --> N
     
     style E fill:#e3f2fd
     style G fill:#f3e5f5
@@ -100,11 +98,55 @@ flowchart TD
     style R fill:#e1f5fe
 ```
 
+### 3. Flujo de Datos Completo del Sistema de Voz
+
+```mermaid
+sequenceDiagram
+    participant BIZ as Equipo de Negocio
+    participant GS as Google Sheets
+    participant CRON as Cron Scheduler
+    participant EL as ElevenLabs Agent
+    participant TW as Twilio (Números)
+    participant N8N as n8n Webhooks
+    participant ZOHO as Zoho CRM
+    participant S3 as AWS S3
+    
+    Note over BIZ,GS: Alimentación inicial de leads
+    BIZ->>GS: Agregar nuevos leads (fecha_procesamiento = BLANK)
+    
+    Note over CRON,GS: Procesamiento automático diario
+    CRON->>GS: Consultar leads con fecha_procesamiento = BLANK
+    GS-->>CRON: Lista de leads sin procesar
+    
+    alt Hay leads pendientes
+        CRON->>EL: Iniciar llamada automática
+        EL->>TW: Usar número Twilio para llamada
+        TW-->>EL: Número disponible
+        
+        Note over EL: ElevenLabs maneja toda la conversación
+        
+        EL->>N8N: Tool call - Actualizar CRM
+        N8N->>ZOHO: Actualizar información del lead
+        ZOHO-->>N8N: Confirmación de actualización
+        N8N-->>EL: Respuesta del tool
+        
+        EL->>N8N: Webhook post-llamada (con audio URL y transcripción)
+        N8N->>S3: Descargar y almacenar audio desde ElevenLabs
+        S3-->>N8N: URL de archivo almacenado en S3
+        N8N->>GS: Actualizar fecha_procesamiento = HOY + datos de llamada
+        GS-->>N8N: Lead marcado como procesado
+        
+        Note over GS: Lead no volverá a ser llamado
+    else No hay leads pendientes
+        CRON->>CRON: Esperar próxima ejecución
+    end
+```
+
 ---
 
 ## 🤖 Sistema Multi-Agente FAQ-RAG
 
-### 3. Arquitectura del Agent Router y FAQ-RAG
+### 4. Arquitectura del Agent Router y FAQ-RAG
 
 ```mermaid
 graph TB
@@ -169,7 +211,7 @@ graph TB
     style O fill:#e8f5e8
 ```
 
-### 4. Flujo del FAQ-RAG Agent con Búsqueda Híbrida
+### 5. Flujo del FAQ-RAG Agent con Búsqueda Híbrida
 
 ```mermaid
 flowchart TD
@@ -211,7 +253,7 @@ flowchart TD
 
 ## 📊 Observabilidad y Evaluación
 
-### 5. Sistema de Monitoreo y Evaluación
+### 6. Sistema de Monitoreo y Evaluación
 
 ```mermaid
 flowchart TD
@@ -227,14 +269,14 @@ flowchart TD
     E --> G[Langfuse Logging<br/>Trazabilidad Completa]
     F --> G
     
-    G --> H[DataDog Metrics<br/>Dashboard de Performance]
-    
-    H --> I[Análisis de Resultados<br/>- Precisión: 85%<br/>- Tiempo: <2s<br/>- Cobertura: 95%]
+    G --> H[Análisis de Resultados<br/>- Precisión: 85%<br/>- Tiempo: <2s<br/>- Cobertura: 95%]
     
     style A fill:#f3e5f5
     style C fill:#e3f2fd
     style G fill:#fff3e0
-    style I fill:#e8f5e8
+    style H fill:#e8f5e8
 ```
 
 ---
+
+*Esta documentación presenta la arquitectura completa de sistemas de agentes inteligentes, organizada de manera clara y secuencial: primero el sistema de voz automatizado completo, seguido del sistema multi-agente FAQ-RAG con su router inteligente, y finalmente la observabilidad unificada de todo el ecosistema.*
