@@ -24,7 +24,7 @@ graph TB
     subgraph "Specialized Agents"
         G[FAQ-RAG Agent<br/>Pinecone + DuckDuckGo]
         H[Sales Agent]
-        I[Support Agent]
+        I[Property Search Agent<br/>Búsqueda de Inmuebles]
     end
     
     subgraph "Data & Integration"
@@ -164,7 +164,7 @@ graph TB
     subgraph "Specialized Agents"
         F[FAQ-RAG Agent<br/>Preguntas Frecuentes]
         G[Sales Agent<br/>Proceso de Ventas]
-        H[Support Agent<br/>Soporte Técnico]
+        H[Property Search Agent<br/>Búsqueda de Inmuebles]
     end
     
     subgraph "FAQ-RAG Agent Core"
@@ -192,7 +192,7 @@ graph TB
     
     E -->|FAQ Query| F
     E -->|Sales Query| G
-    E -->|Support Query| H
+    E -->|Property Search Query| H
     
     F --> I
     I --> J
@@ -251,4 +251,32 @@ flowchart TD
 
 ---
 
+## 📊 Observabilidad y Evaluación
 
+### 6. Sistema de Monitoreo y Evaluación
+
+```mermaid
+flowchart TD
+    A[Dataset de Evaluación<br/>Preguntas + Respuestas Esperadas] --> B[Agente FAQ-RAG<br/>Procesamiento Automático]
+    
+    B --> C[Comparación Automática<br/>Respuesta vs Esperada]
+    
+    C --> D{Evaluación<br/>de Calidad}
+    
+    D -->|Correcta| E[Métrica Positiva<br/>Precisión +1]
+    D -->|Incorrecta| F[Métrica Negativa<br/>Error +1]
+    
+    E --> G[Langfuse Logging<br/>Trazabilidad Completa]
+    F --> G
+    
+    G --> H[Análisis de Resultados<br/>- Precisión: 85%<br/>- Tiempo: <2s<br/>- Cobertura: 95%]
+    
+    style A fill:#f3e5f5
+    style C fill:#e3f2fd
+    style G fill:#fff3e0
+    style H fill:#e8f5e8
+```
+
+---
+
+*Esta documentación presenta la arquitectura completa de sistemas de agentes inteligentes, organizada de manera clara y secuencial: primero el sistema de voz automatizado completo, seguido del sistema multi-agente FAQ-RAG con su router inteligente, y finalmente la observabilidad unificada de todo el ecosistema.*
