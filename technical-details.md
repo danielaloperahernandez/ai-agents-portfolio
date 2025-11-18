@@ -233,7 +233,7 @@ sequenceDiagram
 
 ---
 
-## 🤖 Sistema Multi-Agente FAQ-RAG con Router
+## Sistema Multi-Agente FAQ-RAG con Router
 
 ### 6. Arquitectura del Sistema Multi-Agente con Router
 
@@ -502,7 +502,7 @@ graph TB
 
 ---
 
-## 📊 Observabilidad y Monitoreo del Sistema Completo
+## Observabilidad y Monitoreo del Sistema Completo
 
 ### 12. Flujo de Trazabilidad Unificado
 
