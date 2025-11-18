@@ -1,6 +1,6 @@
-# Diagramas - Sistemas de Agentes IA
+Sistemas de Agentes IA
 
-## 📞 Sistema de Agente de Voz Automatizado
+## Sistema de Agente de Voz Automatizado
 
 ### 1. Arquitectura Completa del Sistema de Voz
 
